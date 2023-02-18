@@ -1,15 +1,46 @@
-# -----------------------------------------------------------------------------------------
-# Hello there!
-# This is AutoCtrlMakeTool, Version: 2.00
-# To run this code, just paste this file in your Maya Scripts directory and rehash Maya.
-# Then paste the code given below:
+#######################################################################################
+# Auto Ctrl Tool
+# Version: 2.00
+# by Aashi Shukla
+#--------------------------------------------------------------------------------------
+# This tool has almost all the features you need for Control Creation and modification.
+# It was especially build keeping in mind, the need to finish  small props and Fk Chain 
+# rigs in the least number of clicks possible. The idea is to  finish the work  quickly 
+# and efficiently. It consists of three main tabs: Main, Utility and Help.
+#
+# In the Main Tab, you can specify the radius, choose the color, shape and Constraining
+# options and it will build the rig for you. If you need  seperate groups like Mesh_Grp,
+# Jnt_Grp and Ctrl_Grp, then tick on Rig  Groups, give it a  name and click on  "Build".
+# Please note that  if you click on the  "Create"  button instead, it will not Build the
+# rig groups. So, if you need the Rig Groups  and Global Ctrl, just click on the "Build"
+# button.
+#
+# The Global Ctrl will provide you with 5 Custom Attributes: Global Scale, Mesh Display,
+# Mesh Visibility, Ctrl  Visibility and  Joint Visibility. By default, you will get all
+# 5 of them; connected properly with their respective nodes but you also get the option
+# to choose all the Attributes you don't need. 
+# 
+# The Utility Tab contains a bunch of Renaming and Joint tools, that will prove to be 
+# helpful in your rig creation and speed up your workflow.
+# 
+# The Help Tab, as the name suggests contains all the help you need regarding this tool.
+# You can report the bugs on: aashi41207@gmail.com 
+# 
+#--------------------------------------------------------------------------------------
+# To run this script, paste this file as it is, in your Maya Scripts directory:
+# C:\Users\UserName\Documents\maya\2020\scripts
+# and then paste the following code in your Script Editor:
 # import AutoCtrlMakeTool_v2000
 # reload(AutoCtrlMakeTool_v2000)
 # AutoCtrlMakeTool_v2000.GUI()
-# and run!
-# ------------------------------------------------------------------------------------------
+# and Run!
+# Rest, I hope that this tool proves to be a useful asset in your rigging mania!
+########################################################################################
+
+
 from functools import partial
 import maya.cmds as cmds
+
 
 def GUI():
 	# Kill the window if already exists
@@ -265,7 +296,6 @@ def GUI():
 	cmds.rowColumnLayout(nc=5, p=clm)
 	cmds.separator(w=10, st='none')
 	cmds.button( w=150, l='Remove First Character-->', c = Remove_FC )
-#	cmds.button( w=150, l='Remove First Character-->', c = Others.Remove_FC )
 	cmds.separator(w=10, st='none')
 	cmds.button( w=150,  l='<--Remove Last Character', c = Remove_LC )
 	cmds.separator(w=10, st='none')
@@ -364,12 +394,14 @@ def Make_Rig_Group(Add_Global_Text, Rig_Name_Text, Rig_Name, gb_01, gb_02, state
 		cmds.textField(Rig_Name, e=1, enable=True)
 		cmds.radioButton( gb_01, e=1, enable=True)
 		cmds.radioButton( gb_02, e=1, enable=True)
+		
 	else:
 		cmds.text( Add_Global_Text, e=1, enable=False)
 		cmds.text(Rig_Name_Text, e=1, enable=False)
 		cmds.textField(Rig_Name, e=1, enable=False)
 		cmds.radioButton( gb_01, e=1, enable=False)
 		cmds.radioButton( gb_02, e=1, enable=False)
+
 		
 def  Lock_Global_Attr_Switch(Global_Attr_Text,Attr_01,Attr_02,Attr_03,Attr_04,Attr_05, state, *args):
 	if state:
@@ -386,7 +418,6 @@ def  Lock_Global_Attr_Switch(Global_Attr_Text,Attr_01,Attr_02,Attr_03,Attr_04,At
 		cmds.checkBox(Attr_03, e=1, enable=True)
 		cmds.checkBox(Attr_04, e=1, enable=True)
 		cmds.checkBox(Attr_05, e=1, enable=True)
-
 # --------------------------------------------------------------------------------------------------
 # ============================= RENAME TOOLS ===========================================
 def Rename_Tool(Prefix, Padding, Suffix):
@@ -406,7 +437,7 @@ def Remove_FC(*args):
 	
 	for item in remove_FC_list:
 		cmds.rename( item, item[1:])
-	print 'Fk removed'
+	'FC removed'
 # -------------------------------------
 def Remove_LC(*args):
 	remove_LC_list = cmds.ls(sl=True)
@@ -1160,7 +1191,8 @@ def Create(Radius,Color,Jnt_Prvd,FK_Chain, ps_01,ps_02,sk_01,PC,SC,Make_Grp,Rig_
 					print Renaming_Rig_List
 					print rig_name
 					for count, item in enumerate(Renaming_Rig_List):
-						cmds.rename( item, str(rig_name) + '_' + item)
+						if cmds.objExists(item):
+							cmds.rename( item, str(rig_name) + '_' + item)
 				else:
 					print "Group option not selected"
 				# ============================================================================================
@@ -1466,7 +1498,8 @@ def Create(Radius,Color,Jnt_Prvd,FK_Chain, ps_01,ps_02,sk_01,PC,SC,Make_Grp,Rig_
 			print New_without_shape_list
 			print rig_name
 			for count, item in enumerate(New_without_shape_list):
-				cmds.rename( item, str(rig_name) + '_' + item)
+				if cmds.objExists(item):
+					cmds.rename( item, str(rig_name) + '_' + item)
 		else:
 			print "Group option not selected"
 		# --------------------------
@@ -1604,5 +1637,3 @@ def Create(Radius,Color,Jnt_Prvd,FK_Chain, ps_01,ps_02,sk_01,PC,SC,Make_Grp,Rig_
 		# ============================================================================================
 	 
 	 	print "RIG compiled \n Thank You!"
-	 	
-	 	
