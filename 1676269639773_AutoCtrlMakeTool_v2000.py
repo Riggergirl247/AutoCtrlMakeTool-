@@ -25,7 +25,6 @@
 # 
 # The Help Tab, as the name suggests contains all the help you need regarding this tool.
 # You can report the bugs on: aashi41207@gmail.com 
-# 
 #--------------------------------------------------------------------------------------
 # To run this script, paste this file as it is, in your Maya Scripts directory:
 # C:\Users\UserName\Documents\maya\2020\scripts
@@ -34,6 +33,8 @@
 # reload(AutoCtrlMakeTool_v2000)
 # AutoCtrlMakeTool_v2000.GUI()
 # and Run!
+#
+#
 # Rest, I hope that this tool proves to be a useful asset in your rigging mania!
 ########################################################################################
 
